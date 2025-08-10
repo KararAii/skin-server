@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const r = await request('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.2, messages: [{ role:'system', content: system }, ...messages].slice(-20) })
+      body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o', temperature: 0.2, messages: [{ role:'system', content: system }, ...messages].slice(-20) })
     });
     const status = r.statusCode || 500;
     const raw = await r.body.text();

@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'missing_OPENAI_API_KEY' });
     }
 
-    // Call OpenAI Vision (Chat Completions with input_image)
+    // Call OpenAI Vision (Chat Completions with image_url)
     const r = await request('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        model: process.env.OPENAI_MODEL || 'gpt-4o',
         temperature: 0.2,
         response_format: { type: 'json_object' },
         messages: [
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
             role: 'user',
             content: [
               { type: 'text', text: locale === 'ar' ? 'حلّل حالة البشرة من هذه الصورة.' : 'Analyze skin from this face image.' },
-              { type: 'input_image', image_url: { url: imageBase64 } }
+              { type: 'image_url', image_url: { url: imageBase64 } }
             ]
           }
         ]
